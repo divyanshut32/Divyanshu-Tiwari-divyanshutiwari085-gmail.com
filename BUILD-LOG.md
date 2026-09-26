@@ -82,3 +82,8 @@ Note: this is the failure mode where a passing test is worse than a failing one.
 - The local environment still needs a successful dependency install before the API and Playwright suites can be executed.
 - The transfer endpoint needs a final hidden-test review for the “provision in both orgs” requirement.
 - The final repository must be public and retain the commit history; this working copy has not been pushed to the candidate's GitHub repository yet.
+
+## 2026-09-26 · Verification checkpoint
+
+- After separating the implementation into auth/context/permissions, the JWT suite remained 43/43 and all server-side JavaScript passed `node --check`.
+- The SQLite suites are intentionally still unclaimed because dependency installation timed out and did not produce a usable native `better-sqlite3` module in this environment.
