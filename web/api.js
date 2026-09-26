@@ -1,0 +1,4 @@
+let accessToken=null;
+export const setToken=t=>{accessToken=t};
+async function request(path,opts={}){const headers={'content-type':'application/json',...(opts.headers||{})};if(accessToken)headers.authorization=`Bearer ${accessToken}`;const r=await fetch('/v1'+path,{...opts,headers,body:opts.body?JSON.stringify(opts.body):undefined});let data=null;try{data=await r.json()}catch{}if(!r.ok)throw Object.assign(new Error(data?.error?.message||'request failed'),{status:r.status,code:data?.error?.code,reason:data?.error?.reason});return data}
+export const api={get:p=>request(p),post:(p,b)=>request(p,{method:'POST',body:b}),patch:(p,b)=>request(p,{method:'PATCH',body:b}),del:p=>request(p,{method:'DELETE'}),login:async(body)=>{const d=await request('/auth/login',{method:'POST',body});accessToken=d.token;return d},refresh:async()=>{const d=await request('/auth/refresh',{method:'POST'});accessToken=d.token;return d}};
